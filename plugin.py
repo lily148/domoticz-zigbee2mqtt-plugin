@@ -1,18 +1,11 @@
 """
-<plugin key="Zigbee2MQTT" name="Zigbee2MQTT" version="0.0.19">
+<plugin key="ZigbeePlugin" name="Smart Gateway Zigbee Plugin" version="0.0.10">
     <description>
-      Plugin to add support for <a href="https://github.com/Koenkk/zigbee2mqtt">zigbee2mqtt</a> project<br/><br/>
-      Specify MQTT server and port.<br/>
+      Smart Gateway v3 allow you to connect many Zigbee devices.
       <br/>
       Automatically creates Domoticz devices for connected device.<br/>
     </description>
     <params>
-        <param field="Address" label="MQTT Server address" width="300px" required="true" default="127.0.0.1"/>
-        <param field="Port" label="Port" width="300px" required="true" default="1883"/>
-        <param field="Username" label="MQTT Username (optional)" width="300px" required="false" default=""/>
-        <param field="Password" label="MQTT Password (optional)" width="300px" required="false" default="" password="true"/>
-        <param field="Mode3" label="MQTT Client ID (optional)" width="300px" required="false" default=""/>
-        <param field="Mode1" label="Zigbee2Mqtt Topic" width="300px" required="true" default="zigbee2mqtt"/>
         <param field="Mode2" label="Zigbee pairing" width="75px" required="true">
             <options>
                 <option label="Enabled" value="true"/>
@@ -50,13 +43,13 @@ class BasePlugin:
             Domoticz.Debugging(2)
 
         Domoticz.Debug("onStart called")
-        self.base_topic = Parameters["Mode1"].strip()
+        self.base_topic = "zigbee2mqtt"
         self.pairing_enabled = True if Parameters["Mode2"] == 'true' else False
         self.subscribed_for_devices = False
 
-        mqtt_server_address = Parameters["Address"].strip()
-        mqtt_server_port = Parameters["Port"].strip()
-        mqtt_client_id = Parameters["Mode3"].strip()
+        mqtt_server_address = "127.0.0.1"
+        mqtt_server_port = "1883"
+        mqtt_client_id = ""
         self.mqttClient = MqttClient(mqtt_server_address, mqtt_server_port, mqtt_client_id, self.onMQTTConnected, self.onMQTTDisconnected, self.onMQTTPublish, self.onMQTTSubscribed)
 
         self.available_devices = DeviceStorage.getInstance()
