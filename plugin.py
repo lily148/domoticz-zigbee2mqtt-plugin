@@ -3,7 +3,7 @@
     <description>
       Smart Gateway v3 allow you to connect many Zigbee devices.
       <br/>
-      Automatically creates Domoticz devices for connected device.<br/>
+      Automatically create devices for connected device.<br/>
     </description>
     <params>
         <param field="Mode2" label="Zigbee pairing" width="75px" required="true">
