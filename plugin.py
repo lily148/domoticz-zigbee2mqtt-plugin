@@ -1,5 +1,5 @@
 """
-<plugin key="ZigbeePlugin" name="Smart Gateway Zigbee Plugin" version="0.0.10">
+<plugin key="ZigbeePlugin" name="Smart Gateway Zigbee Plugin" version="0.0.21">
     <description>
       Smart Gateway v3 allow you to connect many Zigbee devices.
       <br/>
@@ -36,7 +36,7 @@ class BasePlugin:
 
     def onStart(self):
         self.debugging = Parameters["Mode6"]
-        
+
         if self.debugging == "Verbose":
             Domoticz.Debugging(2+4+8+16+64)
         if self.debugging == "Debug":
@@ -86,7 +86,8 @@ class BasePlugin:
             if (message != None):
                 self.mqttClient.publish(self.base_topic + '/' + message['topic'], message['payload'])
         else:
-            Domoticz.Log('Device ' + device.Name + ' does not have adapter (model: "' + model + '"')        
+            Domoticz.Log('Device ' + device.Name + ' does not have adapter (model: "' + model + '"')
+            Domoticz.Log('If you would like plugin to support this device, please create ticket by this link: https://github.com/stas-demydiuk/domoticz-zigbee2mqtt-plugin/issues/new?labels=new+device&template=new-device-support.md')
 
     def onConnect(self, Connection, Status, Description):
         Domoticz.Debug("onConnect called")
@@ -134,10 +135,10 @@ class BasePlugin:
         if (topic == self.base_topic + '/bridge/log'):
             if message['type'] == 'devices':
                 Domoticz.Log('Received available devices list from bridge')
-                
+
                 self.available_devices.clear()
                 self.available_devices.update(Devices, message['message'])
-                
+
                 if self.subscribed_for_devices == False:
                     self.mqttClient.subscribe([self.base_topic + '/+'])
                     self.subscribed_for_devices = True
@@ -149,7 +150,7 @@ class BasePlugin:
 
         device_name = topic.replace(self.base_topic + "/", "")
         device_data = self.available_devices.get_device_by_name(device_name)
-        
+
         if (device_data != None):
             model = device_data['model']
 
@@ -172,7 +173,7 @@ def onStart():
 def onStop():
     global _plugin
     _plugin.onStop()
-    
+
 def onConnect(Connection, Status, Description):
     global _plugin
     _plugin.onConnect(Connection, Status, Description)
