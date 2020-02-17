@@ -1,9 +1,5 @@
 """
-<<<<<<< HEAD
 <plugin key="ZigbeePlugin" name="Smart Gateway Zigbee Plugin" version="0.0.21">
-=======
-<plugin key="Zigbee2MQTT" name="Zigbee2MQTT" version="0.1.0">
->>>>>>> pr/4
     <description>
       Smart Gateway v3 allow you to connect many Zigbee devices.
       <br/>
@@ -133,17 +129,10 @@ class BasePlugin:
         if (topic == self.base_topic + '/bridge/log'):
             if message['type'] == 'devices':
                 Domoticz.Log('Received available devices list from bridge')
-<<<<<<< HEAD
-
-                self.available_devices.clear()
-                self.available_devices.update(Devices, message['message'])
-
-=======
                 
                 self.devices_manager.clear()
                 self.devices_manager.update(Devices, message['message'])
                 
->>>>>>> pr/4
                 if self.subscribed_for_devices == False:
                     self.mqttClient.subscribe([self.base_topic + '/+'])
                     self.subscribed_for_devices = True
@@ -157,27 +146,12 @@ class BasePlugin:
 
             return
 
-<<<<<<< HEAD
-        device_name = topic.replace(self.base_topic + "/", "")
-        device_data = self.available_devices.get_device_by_name(device_name)
-
-        if (device_data != None):
-            model = device_data['model']
-
-            if (model in adapter_by_model):
-                zigbee_message = ZigbeeMessage(message)
-                adapter = adapter_by_model[model](Devices)
-                adapter.handleMqttMessage(device_data, zigbee_message)
-            else:
-                Domoticz.Debug('Unsupported zigbee device type with model "' + model + '"')
-=======
         entity_name = topic.replace(self.base_topic + "/", "")
         
         if (self.devices_manager.get_device_by_name(entity_name) != None):
             self.devices_manager.handle_mqtt_message(Devices, entity_name, message)
         elif (self.groups_manager.get_group_by_name(entity_name) != None):
             self.groups_manager.handle_mqtt_message(entity_name, message)
->>>>>>> pr/4
         else:
             Domoticz.Debug('Unhandled message from zigbee2mqtt: ' + topic + ' ' + str(message))
 
