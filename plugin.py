@@ -1,5 +1,5 @@
 """
-<plugin key="ZigbeePlugin" name="Smart Gateway Zigbee Plugin" version="0.0.21">
+<plugin key="ZigbeePlugin" name="Smart Gateway Zigbee Plugin" version="0.0.25">
     <description>
       Smart Gateway v3 allow you to connect many Zigbee devices.
       <br/>
