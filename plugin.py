@@ -1,18 +1,17 @@
 """
-<plugin key="Zigbee2MQTT" name="Zigbee2MQTT" version="0.2.0">
+<plugin key="ZigbeePlugin" name="Smart Gateway Zigbee Plugin" version="0.0.21">
     <description>
-      Plugin to add support for <a href="https://github.com/Koenkk/zigbee2mqtt">zigbee2mqtt</a> project<br/><br/>
-      Specify MQTT server and port.<br/>
+      Smart Gateway v3 allow you to connect many Zigbee devices.
       <br/>
-      Automatically creates Domoticz devices for connected device.<br/>
+      Automatically create devices for connected device.<br/>
     </description>
     <params>
-        <param field="Address" label="MQTT Server address" width="300px" required="true" default="127.0.0.1"/>
-        <param field="Port" label="Port" width="300px" required="true" default="1883"/>
-        <param field="Username" label="MQTT Username (optional)" width="300px" required="false" default=""/>
-        <param field="Password" label="MQTT Password (optional)" width="300px" required="false" default="" password="true"/>
-        <param field="Mode3" label="MQTT Client ID (optional)" width="300px" required="false" default=""/>
-        <param field="Mode1" label="Zigbee2Mqtt Topic" width="300px" required="true" default="zigbee2mqtt"/>
+        <param field="Mode2" label="Zigbee pairing" width="75px" required="true">
+            <options>
+                <option label="Enabled" value="true"/>
+                <option label="Disabled" value="false" default="true" />
+            </options>
+        </param>
         <param field="Mode6" label="Debug" width="75px">
             <options>
                 <option label="Verbose" value="Verbose"/>
@@ -39,7 +38,7 @@ class BasePlugin:
 
     def onStart(self):
         self.debugging = Parameters["Mode6"]
-        
+
         if self.debugging == "Verbose":
             Domoticz.Debugging(2+4+8+16+64)
         if self.debugging == "Debug":
@@ -47,12 +46,12 @@ class BasePlugin:
 
         Domoticz.Debug("onStart called")
         self.install()
-        self.base_topic = Parameters["Mode1"].strip()
+        self.base_topic = "zigbee2mqtt"
         self.subscribed_for_devices = False
 
-        mqtt_server_address = Parameters["Address"].strip()
-        mqtt_server_port = Parameters["Port"].strip()
-        mqtt_client_id = Parameters["Mode3"].strip()
+        mqtt_server_address = "127.0.0.1"
+        mqtt_server_port = "1883"
+        mqtt_client_id = ""
         self.mqttClient = MqttClient(mqtt_server_address, mqtt_server_port, mqtt_client_id, self.onMQTTConnected, self.onMQTTDisconnected, self.onMQTTPublish, self.onMQTTSubscribed)
 
         self.api = API(Devices, self.publishToMqtt)
@@ -142,10 +141,10 @@ class BasePlugin:
         if (topic == 'bridge/log'):
             if message['type'] == 'devices':
                 Domoticz.Log('Received available devices list from bridge')
-                
+
                 self.devices_manager.clear()
                 self.devices_manager.update(Devices, message['message'])
-                
+
                 if self.subscribed_for_devices == False:
                     self.mqttClient.subscribe([self.base_topic + '/+'])
                     self.subscribed_for_devices = True
@@ -169,7 +168,7 @@ class BasePlugin:
 
     def install(self):
         Domoticz.Debug('Installing custom pages...')
-        
+
         if not (os.path.isdir('./www/templates/zigbee2mqtt')):
             os.mkdir('./www/templates/zigbee2mqtt')
 
@@ -181,7 +180,7 @@ class BasePlugin:
         copy2('./plugins/zigbee2mqtt/frontend/libs/leaflet.css', './www/templates/zigbee2mqtt/')
         copy2('./plugins/zigbee2mqtt/frontend/libs/viz.js', './www/templates/zigbee2mqtt/')
         copy2('./plugins/zigbee2mqtt/frontend/libs/viz.full.render.js', './www/templates/zigbee2mqtt/')
-        
+
         Domoticz.Debug('Installing custom pages completed.')
 
     def uninstall(self):
@@ -209,7 +208,7 @@ def onStart():
 def onStop():
     global _plugin
     _plugin.onStop()
-    
+
 def onConnect(Connection, Status, Description):
     global _plugin
     _plugin.onConnect(Connection, Status, Description)
