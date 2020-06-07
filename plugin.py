@@ -6,12 +6,6 @@
       Automatically create devices for connected device.<br/>
     </description>
     <params>
-        <param field="Mode2" label="Zigbee pairing" width="75px" required="true">
-            <options>
-                <option label="Enabled" value="true"/>
-                <option label="Disabled" value="false" default="true" />
-            </options>
-        </param>
         <param field="Mode6" label="Debug" width="75px">
             <options>
                 <option label="Verbose" value="Verbose"/>
@@ -47,7 +41,6 @@ class BasePlugin:
         Domoticz.Debug("onStart called")
         self.install()
         self.base_topic = "zigbee2mqtt"
-        self.pairing_enabled = True if Parameters["Mode2"] == 'true' else False
         self.subscribed_for_devices = False
 
         mqtt_server_address = "127.0.0.1"
