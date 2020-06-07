@@ -240,7 +240,7 @@ function(app, Viz, vizRenderer, leaflet) {
                     if (response.result !== undefined) {
                         $ctrl.devices = response.result
                             .filter(function(device) {
-                                return device.HardwareType === 'Zigbee2MQTT'
+                                return device.HardwareType === 'ZigbeePlugin'
                             })
                             .map(function(device) {
                                 return new Device(device)
