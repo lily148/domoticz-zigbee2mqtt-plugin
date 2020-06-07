@@ -1,11 +1,65 @@
 # Changelog
 
 ## master
+- Add strength and angle sensor for Xiaomi DJT11LM
+- Add smoke density, self test and sensivity support for Xiaomi JTYJ-GD-01LM/BW
+
+New devices:
+- iCasa Zigbee AC dimmer
+- iCasa Zigbee 3.0 Filament Lamp 60/64/95/125 mm
+- iCasa Zigbee 3.0 Keypad Pulse 8S
+
+## 0.2.0
+- Support for "stop" command for blinds adapter
+- Support for "skip" action on Ikea Symfonisk
+- Support for `rgb` and `rgbw` zigbee groups
+- Decoupled mode support for Xiaomi single key wired switches (QBKG04LM, QBKG11LM)
+- Custom Domoticz page to manage zigbee network
+- Additional Domoticz device with battery percentage value for battery powered devices
 
 New devices:
 - Xiaomi MiJia light intensity sensor
 - Weiser SmartCode 10
 - Weiser SmartCode 10 Touch
+- Müller Licht Tint smart switch
+- TuYa Temperature & humidity sensor with display
+- Gledopto Zigbee LED controller RGBW plus model
+- SmartThings Outlet UK
+- IKEA TRADFRI signal repeater
+- Alecto Smart Home - Smart sensor door / window
+- Alecto Smart Home branded Smart sensor temp and humidity
+- Xiaomi Aqara Opple 2-button switch
+- Lonhonso 2 gang switch
+- TuYa 2 gang switch
+- TuYa Temperature & humidity sensor with display
+- HEIMAN Smart switch - 1 gang with neutral wire
+- HEIMAN Water leakage sensor
+- HEIMAN Smart temperature & humidity Sensor
+- HEIMAN Smart in wall plug
+- HEIMAN Smart motion sensor
+- HEIMAN Water leakage sensor
+- HEIMAN Smart siren
+- HEIMAN Combustible gas sensor
+- Salus Smart plug
+- SmartThings Outlet with power meter
+- SmartThings Zigbee Outlet UK with power meter
+- SmartThings Zigbee smart plug with power meter
+- Bitron Compact magnetic contact sensor
+- Xiaomi Vima Smart Lock
+- OSRAM SMART+ classic E27 dimmable
+- OSRAM SMART+ outdoor lantern RGBW
+- OSRAM SMART+ classic E27 TW
+- OSRAM SMART+ LED PAR16 GU10
+- OSRAM SMART+ LED CLASSIC E27 RGBW
+- OSRAM Smart+ gardenpole 4W RGBW
+- OSRAM Smart+ mini gardenpole RGBW
+- OSRAM SMART+ Spot GU10 Multicolor
+- OSRAM OSRAM SubstiTUBE T8 Advanced UO Connected
+- OSRAM OSRAM LED panel TW 595 UGR22
+- Shenzhen Homa Smart LED driver
+- Shenzhen Homa Wireless dimmable controller
+- Shenzhen Homa ZigBee AC phase-cut dimmer
+- Sinope Zigbee line volt thermostat
 
 ## 0.1.0
 - Update adapter for Nue / 3A Smart in-wall switch (HGZB-01A)

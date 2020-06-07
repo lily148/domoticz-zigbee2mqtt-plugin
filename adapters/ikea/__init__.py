@@ -1,3 +1,4 @@
+from adapters.base_adapter import Adapter
 from adapters.on_off_switch_adapter import OnOffSwitchAdapter
 from adapters.dimmable_bulb_adapter import DimmableBulbAdapter
 from adapters.dimmable_ct_bulb_adapter import DimmableCtBulbAdapter
@@ -30,6 +31,7 @@ ikea_adapters = {
     'LED1836G9': DimmableBulbAdapter,   # IKEA TRADFRI LED bulb E26/E27 806 lumen, dimmable, warm white
     'LED1842G3': DimmableBulbAdapter,   # IKEA TRADFRI LED bulb E27 250 lumen, dimmable, clear
     'LED1903C5': DimmableCtBulbAdapter, # IKEA TRADFRI LED bulb E14 470 lumen, dimmable, white spectrum, opal white
+    'LED1903C5/LED1835C6': DimmableCtBulbAdapter,   # IKEA TRADFRI LED bulb E14 470 lumen, dimmable, white spectrum, opal white
     'ICPSHC24-10EU-IL-1': DimmableBulbAdapter,  # IKEA TRADFRI driver for wireless control (10 watt)
     'ICPSHC24-30EU-IL-1': DimmableBulbAdapter,  # IKEA TRADFRI driver for wireless control (30 watt)
     'ICTC-G-1': TradfriWirelessDimmer,  # IKEA TRADFRI wireless dimmer
@@ -46,6 +48,7 @@ ikea_adapters = {
     'E1603': OnOffSwitchAdapter,        # IKEA TRADFRI control outlet
     'E1743': TradfriRemoteSwitchOnOff,  # IKEA TRADFRI ON/OFF switch
     'E1744': Symfonisk,                 # IKEA SYMFONISK sound controller
+    'E1746': Adapter,                   # IKEA TRADFRI signal repeater
     'E1603/E1702': OnOffSwitchAdapter,  # IKEA TRADFRI control outlet
     'E1766': TradfriRemoteCloseOpen,    # IKEA TRADFRI open close remote
     'E1757': BlindAdapter,              # IKEA TRADFRI roller blind
