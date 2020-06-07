@@ -173,7 +173,7 @@ class BasePlugin:
             if not (os.path.isdir(dst_plugin_path)):
                 os.makedirs(dst_plugin_path)
 
-            copy2(source_path + '/zigbee2mqtt.html', templates_path)
+            copy2(source_path + '/Zigbee.html', templates_path)
             copy2(source_path + '/zigbee2mqtt.js', templates_path)
             copy2(source_path + '/zigbee_devices.js', dst_plugin_path)
             copy2(source_path + '/zigbee_groups.js', dst_plugin_path)
