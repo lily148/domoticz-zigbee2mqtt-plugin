@@ -48,7 +48,7 @@ class BasePlugin:
         mqtt_client_id = ""
         self.mqttClient = MqttClient(mqtt_server_address, mqtt_server_port, mqtt_client_id, self.onMQTTConnected, self.onMQTTDisconnected, self.onMQTTPublish, self.onMQTTSubscribed)
 
-        self.api = API(Devices, self.publishToMqtt)
+        self.api = API(Devices, self.onApiCommand)
         self.devices_manager = DevicesManager()
         self.groups_manager = GroupsManager()
 
@@ -77,6 +77,14 @@ class BasePlugin:
 
         if (message != None):
             self.publishToMqtt(message['topic'], message['payload'])
+
+    def onApiCommand(self, command, data):
+        if command == 'publish_mqtt':
+            return self.publishToMqtt(data['topic'], data['payload'])
+        elif command == 'remove_device':
+            return self.devices_manager.remove(Devices, data)
+        else:
+            Domoticz.Error('Internal API command "' + command +'" is not supported by plugin')
 
     def publishToMqtt(self, topic, payload):
         self.mqttClient.publish(self.base_topic + '/' + topic, payload)
@@ -133,6 +141,10 @@ class BasePlugin:
             return
 
         if (topic == 'bridge/log'):
+            is_connected = message['type'] == 'device_connected'
+            is_removed = message['type'] == 'device_removed'
+            is_paired = message['type'] == 'pairing' and message['message'] == 'interview_successful'
+
             if message['type'] == 'devices':
                 Domoticz.Log('Received available devices list from bridge')
 
@@ -147,11 +159,16 @@ class BasePlugin:
                 Domoticz.Log('Received groups list from bridge')
                 self.groups_manager.register_groups(Devices, message['message'])
 
-            if message['type'] == 'device_connected' or message['type'] == 'device_removed':
+            if is_connected or is_removed or is_paired:
                 self.publishToMqtt('bridge/config/devices', '')
 
             if message['type'] == 'ota_update':
                 Domoticz.Log(message['message'])
+
+            if message['type'] == 'zigbee_publish_error':
+                #an error occured on publish to the zigbee network
+                deviceMeta = message['meta']
+                Domoticz.Error("A Zigbee publish error occured for device '" + deviceMeta['friendly_name'] + "' with error message: " + message['message'])
 
             return
 
